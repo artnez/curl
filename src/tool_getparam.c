@@ -1185,6 +1185,9 @@ ParameterError getparameter(char *flag,    /* f or -long-flag */
       else if (subletter == 'f') {
         err = add2list(&config->headers, "Content-Type: application/json");
         if(err) return err;
+        GetStr(&postdata, nextarg);
+        if(postdata)
+          size = strlen(postdata);
       }
       else if('@' == *nextarg) {
         /* the data begins with a '@' letter, it means that a file name
