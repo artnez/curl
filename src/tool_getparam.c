@@ -198,6 +198,7 @@ static const struct LongShort aliases[]= {
   {"da", "data-ascii",               TRUE},
   {"db", "data-binary",              TRUE},
   {"de", "data-urlencode",           TRUE},
+  {"df", "json",                     TRUE},
   {"D",  "dump-header",              TRUE},
   {"e",  "referer",                  TRUE},
   {"E",  "cert",                     TRUE},
@@ -1139,6 +1140,7 @@ ParameterError getparameter(char *flag,    /* f or -long-flag */
           if(err)
             return err;
         }
+
         else {
           GetStr(&postdata, p);
           if(postdata)
@@ -1179,6 +1181,10 @@ ParameterError getparameter(char *flag,    /* f or -long-flag */
           else
             return PARAM_NO_MEM;
         }
+      }
+      else if (subletter == 'f') {
+        err = add2list(&config->headers, "Content-Type: application/json");
+        if(err) return err;
       }
       else if('@' == *nextarg) {
         /* the data begins with a '@' letter, it means that a file name
